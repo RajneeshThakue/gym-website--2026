@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX | Ultra Premium Gym</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           ULTRA-ADVANCED CSS VARIABLES
+           ========================================= */
+        :root {
+            --bg-deep: #030305;
+            --neon-cyan: #00f3ff;
+            --neon-purple: #bc13fe;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-muted: #8a8a93;
+            --font-head: 'Syncopate', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            cursor: none; /* Hiding default cursor for custom one */
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(188, 19, 254, 0.08), transparent 25%);
+        }
+
+        /* =========================================
+           CUSTOM NEON CURSOR
+           ========================================= */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .cursor-dot {
+            width: 8px; height: 8px;
+            background-color: var(--neon-cyan);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* =========================================
+           GLASSMORPHISM NAVBAR
+           ========================================= */
+        .navbar {
+            position: fixed; top: 0; width: 100%;
+            padding: 20px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(3, 3, 5, 0.5);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 24px; font-weight: 700;
+            letter-spacing: 3px;
+            background: linear-gradient(to right, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            color: var(--text-main); text-decoration: none;
+            margin-left: 40px; font-size: 14px; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: ''; position: absolute;
+            width: 0; height: 2px;
+            bottom: -5px; left: 0;
+            background: var(--neon-cyan);
+            transition: 0.3s;
+        }
+        .nav-links a:hover::after { width: 100%; }
+
+        /* =========================================
+           HERO SECTION & GLITCH EFFECT
+           ========================================= */
+        .hero {
+            height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-bg-video {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.3; z-index: -1;
+            filter: grayscale(100%) contrast(120%);
+        }
+
+        .glitch-wrapper {
+            font-family: var(--font-head);
+            font-size: clamp(40px, 8vw, 100px);
+            font-weight: 700; text-transform: uppercase;
+            position: relative;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+        }
+
+        /* Glitch Animation */
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-deep);
+        }
+        .glitch::before {
+            left: 3px; text-shadow: -2px 0 var(--neon-purple);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -3px; text-shadow: -2px 0 var(--neon-cyan);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); }
+            20% { clip-path: inset(60% 0 10% 0); }
+            40% { clip-path: inset(40% 0 50% 0); }
+            60% { clip-path: inset(80% 0 5% 0); }
+            80% { clip-path: inset(10% 0 70% 0); }
+            100% { clip-path: inset(30% 0 20% 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); }
+            20% { clip-path: inset(30% 0 20% 0); }
+            40% { clip-path: inset(70% 0 10% 0); }
+            60% { clip-path: inset(20% 0 50% 0); }
+            80% { clip-path: inset(50% 0 30% 0); }
+            100% { clip-path: inset(5% 0 80% 0); }
+        }
+
+        .hero p {
+            font-size: 18px; color: var(--text-muted);
+            max-width: 600px; margin: 20px 0 40px;
+            letter-spacing: 1px;
+        }
+
+        /* Advanced Button */
+        .btn-cyber {
+            padding: 18px 40px;
+            background: transparent;
+            color: var(--neon-cyan);
+            font-family: var(--font-head);
+            font-size: 14px; font-weight: 700; letter-spacing: 3px;
+            border: 1px solid var(--neon-cyan);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .btn-cyber::before {
+            content: ''; position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        .btn-cyber:hover::before { left: 100%; }
+        .btn-cyber:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-deep);
+            box-shadow: 0 0 30px var(--neon-cyan);
+        }
+
+        /* =========================================
+           GLASSMORPHISM CARDS SECTION
+           ========================================= */
+        .section { padding: 120px 5%; }
+        .section-title {
+            font-family: var(--font-head); font-size: 40px;
+            text-align: center; margin-bottom: 60px;
+        }
+        .section-title span { color: var(--neon-purple); }
+
+        .glass-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .glass-card::before {
+            content: ''; position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            opacity: 0; transition: 0.5s; pointer-events: none;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(188, 19, 254, 0.2);
+            border-color: rgba(188, 19, 254, 0.5);
+        }
+        .glass-card:hover::before { opacity: 1; }
+
+        .card-icon {
+            font-size: 40px; color: var(--neon-cyan); margin-bottom: 20px;
+        }
+        .glass-card h3 {
+            font-family: var(--font-head); font-size: 20px; margin-bottom: 15px;
+        }
+        .glass-card p { color: var(--text-muted); line-height: 1.6; }
+
+        /* =========================================
+           SCROLL REVEAL ANIMATION
+           ========================================= */
+        .reveal { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">APEX</div>
+        <div class="nav-links">
+            <a href="#" class="hover-target">Facility</a>
+            <a href="#" class="hover-target">Trainers</a>
+            <a href="#" class="hover-target">Join</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <!-- High-End Background Video Placeholder (Using a dark abstract gif for stability) -->
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop" class="hero-bg-video" alt="Gym Background">
+        
+        <div class="glitch-wrapper reveal">
+            <div class="glitch" data-text="BEYOND HUMAN">BEYOND HUMAN</div>
+        </div>
+        <p class="reveal">The most advanced biomechanics and performance facility on the planet. Upgrade your physical vessel.</p>
+        <a href="#" class="btn-cyber hover-target reveal">INITIALIZE PROTOCOL</a>
+    </header>
+
+    <!-- FEATURES SECTION (GLASSMORPHISM) -->
+    <section class="section">
+        <h2 class="section-title reveal">ELITE <span>SYSTEMS</span></h2>
+        
+        <div class="glass-grid">
+            <div class="glass-card reveal">
+                <i class="fas fa-dna card-icon"></i>
+                <h3>BIOMECHANICS</h3>
+                <p>AI-driven form correction and motion tracking. We don't guess, we engineer your physique using pure data.</p>
+            </div>
+            
+            <div class="glass-card reveal" style="transition-delay: 0.2s;">
+                <i class="fas fa-bolt card-icon"></i>
+                <h3>NEURO-STIMULATION</h3>
+                <p>Advanced recovery pods and CNS reset protocols to ensure you can push past your genetic limits daily.</p>
+            </div>
+            
+            <div class="glass-card reveal" style="transition-delay: 0.4s;">
+                <i class="fas fa-dumbbell card-icon"></i>
+                <h3>ZERO-G LIFTING</h3>
+                <p>Calibrated kinetic machines that adapt resistance to your exact strength curve in real-time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADVANCED JAVASCRIPT -->
+    <script>
+        // 1. Custom Cursor Logic
+        const cursorDot = document.querySelector('[data-cursor-dot]');
+        const cursorOutline = document.querySelector('[data-cursor-outline]');
+        const hoverTargets = document.querySelectorAll('.hover-target, .glass-card');
+
+        window.addEventListener('mousemove', function(e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Outline follows with a slight delay (smooth effect)
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Cursor Hover Effect on Links/Cards
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(0, 243, 255, 0.1)';
+            });
+            target.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // 2. Scroll Reveal Logic (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
